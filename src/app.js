@@ -21,7 +21,7 @@ app.get('/', async (req, res) => {
     <h1 style="color:blue; text-align:center" >Bienvenidos a Glitch de Bruno Rolon</h1>
   <h2 style="text-align:center">Camada: 39760</h2>
   <img src=https://avatars.githubusercontent.com/leobrunorolon alt="BrunoRolon" width="460" height="345">
-  <a href="https://github.com/leobrunorolon/rolon-39760"><h2>Github</h2></a>
+  <a href="https://github.com/leobrunorolon/rolon-39760" target="_blank" rel="noopener noreferrer"><h2>Github</h2></a>
   <a href="/products"><h2>Products</h2></a>
   </div>`);
 });
