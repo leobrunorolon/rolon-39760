@@ -1,0 +1,35 @@
+<div>
+  {{#if products}}
+    <div>
+      <h1>Products</h1>
+      <a href='/'>
+        <button>Home</button></a>
+    </div>
+    {{#if isEmpty}}
+      <p>No hay productos disponibles</p>
+    {{else}}
+      {{#each products}}
+        <div>
+          <p>{{this.title}}</p>
+          <p>${{this.price}}</p>
+          <p>{{this.description}}</p>
+          <img src={{this.image}} alt={{this.title}} width='460' height='345' />
+          <a href='/api/products/{{this.id}}'>
+            <button>Ver Producto</button></a>
+        </div>
+      {{/each}}
+    {{/if}}
+  {{else}}
+    <h1>Product</h1>
+    <div>
+      <p>{{this.title}}</p>
+      <p>${{this.price}}</p>
+      <p>{{this.description}}</p>
+      <img src={{this.image}} alt={{this.title}} width='460' height='345' />
+    </div>
+    <div>
+      <a href='/api/products/'>
+        <button>Volver</button></a>
+    </div>
+  {{/if}}
+</div>

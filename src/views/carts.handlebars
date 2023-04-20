@@ -1,0 +1,15 @@
+<div>
+  <h1>Carts</h1>
+  {{#if isEmpty}}
+    <p>Tu carrito se encuentra vacio</p>
+    <a href='/api/products'><h2>Agrega productos a tu carrito</h2></a>
+  {{else}}
+    {{#each carts}}
+      <div>
+        <p>{{this.title}}</p>
+        <p>${{this.price}}</p>
+        <img src={{this.image}} alt={{this.title}} width='100' height='100' />
+      </div>
+    {{/each}}
+  {{/if}}
+</div>

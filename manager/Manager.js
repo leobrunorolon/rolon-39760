@@ -1,6 +1,7 @@
+import { log } from 'console';
 import fs from 'fs';
 
-export default class ProductsManager {
+export default class Manager {
   constructor(path) {
     this.path = path;
   }
@@ -30,7 +31,6 @@ export default class ProductsManager {
       }
 
       products.push(product);
-      console.log(products);
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(products, null, '\t')
@@ -42,21 +42,32 @@ export default class ProductsManager {
     }
   };
 
-  // deleteById(id) {
-  //   try {
-  //     const data = fs.readFileSync(this.path, 'utf-8');
-  //     const dataPars = JSON.parse(data);
-  //     const dataFilter = dataPars.filter((objeto) => objeto.id !== id);
-  //     const dataString = JSON.stringify(dataFilter);
-  //     fs.writeFileSync(this.path, dataString);
-  //     return dataFilter;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  findById = async (id) => {
+    try {
+      console.log(id);
+      const data = await this.getProducts();
+      const dataFind = data.find((objeto) => objeto.id == id);
+      console.log(dataFind);
+      return dataFind;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // deleteAll() {
-  //   fs.writeFileSync(this.path, '[]');
-  //   return '[]';
-  // }
+  deleteById = async (id) => {
+    try {
+      const data = await this.getProducts();
+      const dataFilter = data.filter((objeto) => objeto.id !== id);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(dataFilter, null, '\t')
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteAll = () => {
+    fs.writeFile(this.path, JSON.stringify([]));
+  };
 }
