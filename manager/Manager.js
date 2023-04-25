@@ -42,6 +42,51 @@ export default class Manager {
     }
   };
 
+  updateById = async (pid, product) => {
+    try {
+      const products = await this.getProducts();
+      let findProduct = products.find((obj) => obj.id === pid);
+      if (findProduct === undefined) {
+        throw { msg: '404 Not found' };
+      }
+      let filterProduct = products.filter((obj) => obj.id !== pid);
+      findProduct = { pid, ...product };
+      const updateProduct = filterProduct.push(findProduct);
+
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(updateProduct, null, '\t')
+      );
+
+      return findProduct;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  addCart = async (id, product, pid) => {
+    try {
+      const carts = await this.getProducts();
+
+      let addCart;
+      if (carts.length === 0) {
+        product.id = 1;
+      } else {
+        product.id = products[products.length - 1].id + 1;
+      }
+
+      carts.push(product);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, '\t')
+      );
+
+      return product;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   findById = async (id) => {
     try {
       console.log(id);
