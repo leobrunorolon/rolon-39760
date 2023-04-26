@@ -42,6 +42,24 @@ export default class Manager {
     }
   };
 
+  addCart = async (cid, product, pid) => {
+    try {
+      const carts = await this.getProducts();
+
+      let cart;
+      const products = [];
+      products.push(product);
+      cart = { id: id, products: [product] };
+
+      carts.push(cart);
+      await fs.promises.writeFile(this.path, JSON.stringify(carts, null, '\t'));
+
+      return product;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   updateById = async (pid, product) => {
     try {
       const products = await this.getProducts();
@@ -64,29 +82,6 @@ export default class Manager {
     }
   };
 
-  addCart = async (id, product, pid) => {
-    try {
-      const carts = await this.getProducts();
-
-      let addCart;
-      if (carts.length === 0) {
-        product.id = 1;
-      } else {
-        product.id = products[products.length - 1].id + 1;
-      }
-
-      carts.push(product);
-      await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(products, null, '\t')
-      );
-
-      return product;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   findById = async (id) => {
     try {
       console.log(id);
@@ -102,7 +97,7 @@ export default class Manager {
   deleteById = async (id) => {
     try {
       const data = await this.getProducts();
-      const dataFilter = data.filter((objeto) => objeto.id !== id);
+      const dataFilter = data.filter((objeto) => objeto.id != id);
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(dataFilter, null, '\t')

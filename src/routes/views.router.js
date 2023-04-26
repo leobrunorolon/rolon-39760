@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
     camada: 'Camada: 39760',
     products: '/api/products',
     carts: '/api/carts',
+    sockets: '/realtimeproducts',
     github: 'https://github.com/leobrunorolon/rolon-39760',
   });
 });

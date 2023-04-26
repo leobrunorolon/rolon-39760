@@ -25,7 +25,7 @@ router.get('/:pid', async (req, res) => {
   }
 });
 
-router.put('/:product', (req, res) => {
+router.post('/:product', (req, res) => {
   try {
     const newProduct = req.body;
     res.send(manager.addProduct(newProduct));
@@ -34,14 +34,15 @@ router.put('/:product', (req, res) => {
   }
 });
 
-// router.get('/:id', (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     res.send(manager.getById(parseInt(id)));
-//   } catch (err) {
-//     res.status(404).send(err);
-//   }
-// });
+router.put('/:pid', (req, res) => {
+  try {
+    const id = req.params.pid;
+    const newProduct = req.body;
+    res.send(manager.updateById(id, newProduct));
+  } catch (err) {
+    res.status(404).send(err.msg);
+  }
+});
 
 // router.post('/', (req, res) => {
 //   try {
