@@ -1,9 +1,35 @@
 <div style='display:flex; gap: 5rem;'>
   <div>
-
+    <div>
+      <h1>Registro</h1>
+      <form action='/realtimeproducts/' method='post'>
+        <label>Title</label>
+        <input name='title' />
+        </br>
+        <label>Price</label>
+        <input name='price' />
+        </br>
+        <label>Description</label>
+        <input name='description' />
+        </br>
+        <label>Category</label>
+        <input name='category' />
+        </br>
+        <label>stock</label>
+        <input name='stock' />
+        </br>
+        <label>status</label>
+        <input name='status' />
+        </br>
+        <label>image url</label>
+        <input name='image' />
+        </br>
+        <input type='submit' />
+      </form>
+      <p>Hacer post y delete desde postman para ver los productos no se por que no me los esta tomando inicialmente</p>
+    </div>
     <h1 id='ola'>Productos agregados</h1>
     <div id='container'>
-
     </div>
   </div>
 </div>

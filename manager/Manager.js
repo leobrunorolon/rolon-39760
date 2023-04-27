@@ -87,7 +87,6 @@ export default class Manager {
       console.log(id);
       const data = await this.getProducts();
       const dataFind = data.find((objeto) => objeto.id == id);
-      console.log(dataFind);
       return dataFind;
     } catch (error) {
       console.log(error);
@@ -97,11 +96,14 @@ export default class Manager {
   deleteById = async (id) => {
     try {
       const data = await this.getProducts();
-      const dataFilter = data.filter((objeto) => objeto.id != id);
-      await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(dataFilter, null, '\t')
-      );
+      const findObj = data.find((objeto) => objeto.id == id);
+      if (findObj !== undefined) {
+        const dataFilter = data.filter((objeto) => objeto.id != id);
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(dataFilter, null, '\t')
+        );
+      }
     } catch (error) {
       console.log(error);
     }
