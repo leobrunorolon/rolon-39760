@@ -1,46 +1,83 @@
 import { Router } from 'express';
 import ProductsManager from '../../manager/Manager.js';
+import { productsModel } from '../models/products.model.js';
 
 const router = Router();
 
 const manager = new ProductsManager('./files/products.json');
 
 router.get('/', async (req, res) => {
+  // FS
+  // try {
+  //   const products = await manager.getProducts();
+  //   const isEmpty = products.lenght === 0;
+  //   res.render('products', { products, isEmpty });
+  // } catch (err) {
+  //   res.status(404).send(err);
+  // }
   try {
-    const products = await manager.getProducts();
+    const products = await productsModel.find()
     const isEmpty = products.lenght === 0;
+    res.send({ result: 'succes', payload: products })
     res.render('products', { products, isEmpty });
   } catch (err) {
-    res.status(404).send(err);
+    res.status(500).send(err);
   }
 });
 
 router.get('/:pid', async (req, res) => {
+  // FS
+  // try {
+  //   const id = req.params.pid;
+  //   const product = await manager.findById(id);
+  //   res.render('products', product);
+  // } catch (err) {
+  //   res.status(404).send(err);
+  // }
+
   try {
-    const id = req.params.pid;
-    const product = await manager.findById(id);
+    const { pid } = req.params;
+    const product = await productsModel.find({ _id: pid });
+    res.send({ result: 'succes', payload: product })
     res.render('products', product);
   } catch (err) {
     res.status(404).send(err);
   }
 });
 
-router.post('/:product', (req, res) => {
+router.post('/', async (req, res) => {
+  // FS
+  // try {
+  //   const newProduct = req.body;
+  //   res.send(manager.addProduct(newProduct));
+  // } catch (err) {
+  //   res.status(404).send(err.msg);
+  // }
   try {
     const newProduct = req.body;
-    res.send(manager.addProduct(newProduct));
+    const result = await productsModel.create(newProduct)
+    res.send({ result: 'succes', payload: result });
   } catch (err) {
-    res.status(404).send(err.msg);
+    res.status(500).send(err.msg);
   }
 });
 
-router.put('/:pid', (req, res) => {
+router.put('/:pid', async (req, res) => {
+  // FS
+  // try {
+  //   const id = req.params.pid;
+  //   const newProduct = req.body;
+  //   res.send(manager.updateById(id, newProduct));
+  // } catch (err) {
+  //   res.status(404).send(err.msg);
+  // }
+  const { pid } = req.params;
+  const updateProduct = req.body;
   try {
-    const id = req.params.pid;
-    const newProduct = req.body;
-    res.send(manager.updateById(id, newProduct));
+    const result = await productsModel.updateOne({ _id: pid }, updateProduct)
+    res.send({ result: 'succes', payload: result })
   } catch (err) {
-    res.status(404).send(err.msg);
+    res.status(500).send(err.msg);
   }
 });
 
@@ -54,13 +91,14 @@ router.put('/:pid', (req, res) => {
 //   }
 // });
 
-// router.delete('/:id', (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     res.send(manager.deleteById(parseInt(id)));
-//   } catch (err) {
-//     res.status(404).send(err.msg);
-//   }
-// });
+router.delete('/:pid', async (req, res) => {
+  const { pid } = req.params
+  try {
+    const result = await productsModel.deleteOne({ _id: pid })
+    res.send({ result: 'succes', payload: result })
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 export default router;
