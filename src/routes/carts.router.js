@@ -15,9 +15,17 @@ router.get('/', async (req, res) => {
   // } catch (err) {
   //   res.status(404).send(err);
   // }
+  try {
+    const carts = await cartsModel.find()
+    const isEmpty = carts.lenght === 0;
+    res.send({ result: 'succes', payload: carts })
+    res.render('carts', { carts, isEmpty });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
-router.put('/:product', (req, res) => {
+router.post('/', async (req, res) => {
   // FS
   // try {
   //   const newProduct = req.body;
@@ -25,6 +33,13 @@ router.put('/:product', (req, res) => {
   // } catch (err) {
   //   res.status(404).send(err.msg);
   // }
+  try {
+    const newCarts = req.body;
+    const result = await cartsModel.create(newCarts)
+    res.send({ result: 'succes', payload: result });
+  } catch (err) {
+    res.status(500).send(err.msg);
+  }
 });
 
 export default router;
