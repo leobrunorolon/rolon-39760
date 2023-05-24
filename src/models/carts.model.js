@@ -13,31 +13,21 @@ const cartsCollection = 'carts'
 // },
 
 const cartsSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    unique: true,
-    require: true
-  },
-  price: {
-    type: Number,
-    require: true
-  },
-  description: {
-    type: String,
-    require: true
-  },
-  category: {
-    type: String,
-    require: true
-  },
-  image: {
-    type: String,
-    require: true
-  },
-  stock: {
-    type: Number,
-    require: true
-  },
+  products: {
+    type: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'products'
+        }
+      }
+    ],
+    default: []
+  }
 })
+
+cartsSchema.pre('find', function () {
+  this.populate('products.product');
+});
 
 export const cartsModel = mongoose.model(cartsCollection, cartsSchema)
