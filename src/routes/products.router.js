@@ -18,8 +18,10 @@ router.get('/', async (req, res) => {
   try {
     const products = await productsModel.find()
     const isEmpty = products.lenght === 0;
-    res.send({ result: 'succes', payload: products })
-    res.render('products', { products, isEmpty });
+    // paginate
+    const result = await productsModel.paginate({}, { limit: 2, page: 1 })
+    res.send({ result: 'succes', payload: result })
+    res.render('products', { result, isEmpty });
   } catch (err) {
     res.status(500).send(err);
   }
