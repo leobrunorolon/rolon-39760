@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     const isEmpty = products.lenght === 0;
     // paginate
     const result = await productsModel.paginate({}, { limit: 2, page: 1 })
-    res.send({ result: 'succes', payload: result })
+    res.send({ result: 'succes', payload: products })
     res.render('products', { result, isEmpty });
   } catch (err) {
     res.status(500).send(err);
