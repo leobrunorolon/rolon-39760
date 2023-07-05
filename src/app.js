@@ -9,6 +9,8 @@ import { Server } from 'socket.io';
 import __dirname from './utils.js';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+//config
+import './dao/dbManagers/dbConfig.js'
 
 const app = express();
 
