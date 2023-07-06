@@ -39,12 +39,13 @@ app.get('/delete-cookies', (req, res) => {
   res.clearCookie('CoderCookie').send('Cookie removida')
 })
 
-try {
-  await mongoose.connect('mongodb+srv://leobruno:zZaKaHGRgn4w6oza@coderhouse.3hsb4ss.mongodb.net/?retryWrites=true&w=majority')
-  console.log("DB connected");
-} catch (error) {
-  console.log(error);
-}
+// se migra a dbconfig
+// try {
+//   await mongoose.connect('mongodb+srv://leobruno:zZaKaHGRgn4w6oza@coderhouse.3hsb4ss.mongodb.net/?retryWrites=true&w=majority')
+//   console.log("DB connected");
+// } catch (error) {
+//   console.log(error);
+// }
 
 const server = app.listen(8080, () => console.log('Listening on port 8080'));
 
