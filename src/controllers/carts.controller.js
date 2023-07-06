@@ -1,7 +1,7 @@
 import {
   saveCart as saveCartservice,
   getCarts as getCartsService
-} from '../services/toys.service.js'
+} from '../services/carts.service.js'
 
 const saveCart = async (req, res) => {
   try {
