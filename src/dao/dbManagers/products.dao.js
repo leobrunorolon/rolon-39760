@@ -12,14 +12,14 @@ export default class ProductsDao {
   }
 
   async findProduct(id) {
-    return await productsModel.find(id);
+    return await productsModel.find({ _id: pid });
   }
 
   async updateProduct(id, product) {
-    return await productsModel.updateOne(id, product);
+    return await productsModel.updateOne({ _id: pid }, product);
   }
 
   async deleteProduct(id) {
-    return await productsModel.deleteOne(id);
+    return await productsModel.deleteOne({ _id: pid });
   }
 }
