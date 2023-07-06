@@ -1,4 +1,4 @@
-import dotenv from 'dorenv'
+import dotenv from 'dotenv'
 
 dotenv.config()
 

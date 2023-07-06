@@ -30,4 +30,6 @@ cartsSchema.pre('find', function () {
   this.populate('products.product');
 });
 
-export const cartsModel = mongoose.model(cartsCollection, cartsSchema)
+const cartsModel = mongoose.model(cartsCollection, cartsSchema)
+
+export default cartsModel

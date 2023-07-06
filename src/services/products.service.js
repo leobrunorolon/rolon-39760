@@ -5,7 +5,7 @@ const saveProduct = async (product) => {
   return product
 }
 
-const getCarts = async () => {
+const getProducts = async () => {
   const products = await PRODUCTSDAO.getAll()
   return products
 }
@@ -27,7 +27,7 @@ const deleteProduct = async (id) => {
 
 export {
   saveProduct,
-  getCarts,
+  getProducts,
   findProduct,
   updateProduct,
   deleteProduct
