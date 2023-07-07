@@ -7,10 +7,15 @@ import socketsRouter from './routes/realTimeProducts.router.js';
 import sessionsRouter from './routes/sessions.router.js'
 import { Server } from 'socket.io';
 import __dirname from './utils.js';
-import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 //config
 import './dao/dbManagers/dbConfig.js'
+// dotenv
+import dotenv from 'dotenv'
+//TWILIO
+import twilio from 'twilio'
+
+dotenv.config()
 
 const app = express();
 
@@ -39,13 +44,35 @@ app.get('/delete-cookies', (req, res) => {
   res.clearCookie('CoderCookie').send('Cookie removida')
 })
 
-// se migra a dbconfig
-// try {
-//   await mongoose.connect('mongodb+srv://leobruno:zZaKaHGRgn4w6oza@coderhouse.3hsb4ss.mongodb.net/?retryWrites=true&w=majority')
-//   console.log("DB connected");
-// } catch (error) {
-//   console.log(error);
-// }
+//TWILIO
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN,
+  process.env.TWILIO_PHONE_NUMBER
+)
+app.post('/sms', async (req, res) => {
+  const { name, product } = req.body;
+
+  await client.messages.create({
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: process.env.TWILIO_NUM_VERIFICATION,
+    body: `Hola ${name} gracias por tu compra. Tu producto es ${product}`
+  })
+  res.send('SMS sent ok')
+})
+
+app.post('/whatsapp', async (req, res) => {
+  const { name, product } = req.body;
+
+  await client.messages.create({
+    body: `Hola ${name} gracias por tu compra. Tu producto es ${product}`,
+    from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
+    to: `whatsapp:${process.env.TWILIO_NUM_VERIFICATION_WHATSAPP}`,
+    mediaUrl: 'https://cdn.uc.assets.prezly.com/971f25d5-4704-4b75-9fb1-2ce35c6b498f/-/quality/best/-/format/auto/'
+  });
+
+  res.send('Whatsapp sent')
+})
 
 const server = app.listen(8080, () => console.log('Listening on port 8080'));
 
