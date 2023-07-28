@@ -4,14 +4,24 @@ import {
 } from '../services/users.service.js'
 
 const saveUser = async (req, res) => {
-  const user = req.body
-  await saveUserService(user)
-  res.send(user)
+  try {
+    const user = req.body
+    await saveUserService(user)
+    res.send(user)
+  } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
+    res.status(500).send(err);
+  }
 }
 
 const getUsers = async (req, res) => {
-  const users = await getUsersService()
-  res.send(users)
+  try {
+    const users = await getUsersService()
+    res.send(users)
+  } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
+    res.status(500).send(err);
+  }
 }
 
 export {

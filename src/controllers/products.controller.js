@@ -11,6 +11,7 @@ const saveProduct = async (req, res) => {
     await saveProductService(product)
     res.send(product)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }
@@ -20,6 +21,7 @@ const getProducts = async (req, res) => {
     const products = await getProductsService()
     res.send(products)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }
@@ -30,6 +32,7 @@ const findProduct = async (req, res) => {
     const product = await findProductService(pid)
     res.send(product)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }
@@ -41,6 +44,7 @@ const updateProduct = async (req, res) => {
     const product = await updateProductService(pid, updateProduct)
     res.send(product)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }
@@ -51,6 +55,7 @@ const deleteProduct = async (req, res) => {
     const product = await deleteProductService(pid)
     res.send(product)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }

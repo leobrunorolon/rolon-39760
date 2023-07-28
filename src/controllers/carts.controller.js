@@ -9,6 +9,7 @@ const saveCart = async (req, res) => {
     await saveCartservice(cart)
     res.send(cart)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }
@@ -18,6 +19,7 @@ const getCarts = async (req, res) => {
     const carts = await getCartsService()
     res.send(carts)
   } catch (error) {
+    req.logger.error(`Prueba error ${error}`);
     res.status(500).send(err);
   }
 }

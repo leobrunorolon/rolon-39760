@@ -6,7 +6,7 @@ import cartsRouter from './routes/carts.router.js';
 import socketsRouter from './routes/realTimeProducts.router.js';
 import sessionsRouter from './routes/sessions.router.js'
 import { Server } from 'socket.io';
-import __dirname from './utils.js';
+import __dirname from './utils/utils.js';
 import cookieParser from 'cookie-parser';
 //config
 import './dao/dbManagers/dbConfig.js'
@@ -14,10 +14,12 @@ import './dao/dbManagers/dbConfig.js'
 import dotenv from 'dotenv'
 //TWILIO
 import twilio from 'twilio'
+import { addLogger } from './utils/logger.js';
 
 dotenv.config()
 
 const app = express();
+app.use(addLogger)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
