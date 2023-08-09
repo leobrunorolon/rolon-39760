@@ -1,9 +1,10 @@
-import { Router } from 'express'
-import { getUsers, saveUser } from '../controllers/users.controller.js'
+import Router from './router.js'
+import { passportStrategiesEnum } from '../config/enums.js'
+import { getUsers, saveUser, login, register } from '../controllers/users.controller.js'
 
-const router = Router()
-
-router.get('/', getUsers)
-router.post('/', saveUser)
-
-export default router
+export default class UsersRouter extends Router {
+  init() {
+    this.post('/login', ['PUBLIC'], passportStrategiesEnum.NOTHING, login);
+    this.post('/register', ['PUBLIC'], passportStrategiesEnum.NOTHING, register);
+  }
+}
