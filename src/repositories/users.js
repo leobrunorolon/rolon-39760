@@ -3,12 +3,12 @@ export default class UsersRepository {
     this.dao = dao;
   }
 
-  getByEmail = async (email) => {
+  async getByEmail(email) {
     const result = await this.dao.getByEmail(email);
     return result;
   }
 
-  save = async (user) => {
+  async save(user) {
     const result = await this.dao.save(user);
     return result;
   }

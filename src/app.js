@@ -1,13 +1,15 @@
 import express from 'express';
+import { __dirname } from './utils/utils.js';
 import handlebars from 'express-handlebars';
 import viewsRouter from './routes/views.router.js';
+//routes
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import UsersRouter from './routes/users.router.js'
+//socket
 import socketsRouter from './routes/realTimeProducts.router.js';
 import sessionsRouter from './routes/sessions.router.js'
 import { Server } from 'socket.io';
-import { __dirname } from './utils/utils.js';
 import cookieParser from 'cookie-parser';
 // dotenv
 import dotenv from 'dotenv'
@@ -15,6 +17,8 @@ import dotenv from 'dotenv'
 import twilio from 'twilio'
 import { addLogger } from './utils/logger.js';
 //Routes
+// const productsRouter = ProductsRouter()
+// const cartsRouter = CartsRouter()
 const usersRouter = new UsersRouter();
 //Passport
 import passport from 'passport';
@@ -23,22 +27,23 @@ import initializePassport from './config/passport.js';
 dotenv.config()
 
 const app = express();
+//Passport
 initializePassport();
 app.use(passport.initialize());
-
+//logger
 app.use(addLogger)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-
+//handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 // router
 app.use('/', viewsRouter);
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
+// app.use('/api/products', productsRouter);
+// app.use('/api/carts', cartsRouter);
 app.use('/api/users', usersRouter.getRouter());
 app.use('/realtimeproducts', socketsRouter);
 app.use('/api/sessions', sessionsRouter);
