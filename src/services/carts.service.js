@@ -1,4 +1,4 @@
-import { CARTSDAO } from "../dao/index.js";
+import { CARTSDAO } from "../dao/factory.js";
 
 const saveCart = async (cart) => {
   await CARTSDAO.save(cart)

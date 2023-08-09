@@ -1,8 +1,4 @@
-import {
-  saveUser as saveUserService,
-  getUsers as getUsersService
-} from '../services/users.service.js'
-import * as usersService from '../services/users.services.js';
+import * as usersService from '../services/users.service.js';
 import { IncorrectLoginCredentials, UserNotFound, UserAlreadyExists } from "../utils/custom-exceptions.js";
 
 const login = async (req, res) => {
@@ -13,13 +9,15 @@ const login = async (req, res) => {
     res.sendSuccess({ accessToken });
   } catch (error) {
     if (error instanceof UserNotFound) {
+      req.logger.error(`User no found ${error.message}`);
       return res.sendClientError(error.message);
     }
 
     if (error instanceof IncorrectLoginCredentials) {
+      req.logger.error(`Incorrect login credential ${error.message}`);
       return res.sendClientError(error.message);
     }
-    req.logger.error(`Prueba error ${error}`);
+    req.logger.error(`Error ${error.message}`);
     res.sendServerError(error);
   }
 }
@@ -36,10 +34,12 @@ const register = async (req, res) => {
     const register = await usersService.register({ ...req.body });
     res.sendSuccess(register);
   } catch (error) {
-    console.log(error);
+
     if (error instanceof UserAlreadyExists) {
+      req.logger.error(`User already exists ${error.message}`);
       return res.sendClientError('user already exists')
     }
+    req.logger.error(`Error ${error.message}`);
     res.sendServerError(error.message);
   }
 }
@@ -48,31 +48,3 @@ export {
   login,
   register
 }
-
-//TODO: old
-
-// const saveUser = async (req, res) => {
-//   try {
-//     const user = req.body
-//     await saveUserService(user)
-//     res.send(user)
-//   } catch (error) {
-//     req.logger.error(`Prueba error ${error}`);
-//     res.status(500).send(err);
-//   }
-// }
-
-// const getUsers = async (req, res) => {
-//   try {
-//     const users = await getUsersService()
-//     res.send(users)
-//   } catch (error) {
-//     req.logger.error(`Prueba error ${error}`);
-//     res.status(500).send(err);
-//   }
-// }
-
-// export {
-//   saveUser,
-//   getUsers
-// }

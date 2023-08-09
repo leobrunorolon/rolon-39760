@@ -1,13 +1,22 @@
-import usersModel from './models/users.model.js'
+import { userModel } from './models/users.model';
 
 export default class UsersDao {
-  constructor() { }
-
-  async getAll() {
-    return await usersModel.find();
+  constructor() {
+    console.log('Working users with DB')
   }
 
-  async save(user) {
-    return await usersModel.create(user);
+  getAll = async () => {
+    const users = await userModel.find();
+    return users.map(user => user.toObject());
+  }
+
+  getByEmail = async (email) => {
+    const user = await userModel.findOne({ email }).lean();
+    return user;
+  }
+
+  save = async (user) => {
+    const result = await userModel.create(user);
+    return result;
   }
 }

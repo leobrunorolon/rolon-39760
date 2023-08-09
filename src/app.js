@@ -3,22 +3,29 @@ import handlebars from 'express-handlebars';
 import viewsRouter from './routes/views.router.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
+import UsersRouter from './routes/users.router.js'
 import socketsRouter from './routes/realTimeProducts.router.js';
 import sessionsRouter from './routes/sessions.router.js'
 import { Server } from 'socket.io';
-import __dirname from './utils/utils.js';
+import { __dirname } from './utils/utils.js';
 import cookieParser from 'cookie-parser';
-//config
-import './dao/dbManagers/dbConfig.js'
 // dotenv
 import dotenv from 'dotenv'
 //TWILIO
 import twilio from 'twilio'
 import { addLogger } from './utils/logger.js';
+//Routes
+const usersRouter = new UsersRouter();
+//Passport
+import passport from 'passport';
+import initializePassport from './config/passport.js';
 
 dotenv.config()
 
 const app = express();
+initializePassport();
+app.use(passport.initialize());
+
 app.use(addLogger)
 
 app.use(express.json());
@@ -32,6 +39,7 @@ app.set('view engine', 'handlebars');
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/api/users', usersRouter.getRouter());
 app.use('/realtimeproducts', socketsRouter);
 app.use('/api/sessions', sessionsRouter);
 // cookie parser

@@ -1,6 +1,6 @@
 import Router from './router.js'
 import { passportStrategiesEnum } from '../config/enums.js'
-import { getUsers, saveUser, login, register } from '../controllers/users.controller.js'
+import { login, register } from '../controllers/users.controller.js'
 
 export default class UsersRouter extends Router {
   init() {

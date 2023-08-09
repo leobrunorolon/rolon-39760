@@ -1,4 +1,4 @@
-import { PRODUCTSDAO } from "../dao/index.js";
+import { PRODUCTSDAO } from "../dao/factory.js";
 
 const saveProduct = async (product) => {
   await PRODUCTSDAO.save(product)
