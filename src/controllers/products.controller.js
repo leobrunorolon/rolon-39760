@@ -1,9 +1,4 @@
-import {
-  saveProduct as saveProductService,
-  getProducts as getProductsService,
-  updateProduct as updateProductService,
-  deleteProduct as deleteProductService
-} from '../services/products.service.js'
+import * as productsService from '../services/products.service.js'
 
 const saveProduct = async (req, res) => {
   try {

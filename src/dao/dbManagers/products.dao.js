@@ -1,25 +1,37 @@
 import productsModel from './models/products.model.js'
 
 export default class ProductsDao {
-  constructor() { }
+  constructor() {
+    console.log('Working products with DB')
+  }
 
   async getAll() {
-    return await productsModel.find();
+    const products = await productsModel.find();
+    return products.map(product => product.toObject());
+  }
+
+  async getAllPaginated(limit, page) {
+    const product = await productsModel.paginate({}, { limit, page, lean: true });
+    return product;
   }
 
   async save(product) {
-    return await productsModel.create(product);
+    const newProduct = await productsModel.create(product);
+    return newProduct
   }
 
-  async findProduct(id) {
-    return await productsModel.find({ _id: pid });
+  async getById(pid) {
+    const product = await productsModel.findOne({ _id: pid });
+    return product.toObject();
   }
 
-  async updateProduct(id, product) {
-    return await productsModel.updateOne({ _id: pid }, product);
+  async updateById(pid, product) {
+    const result = await productsModel.updateOne({ _id: pid }, product);
+    return result;
   }
 
-  async deleteProduct(id) {
-    return await productsModel.deleteOne({ _id: pid });
+  async deleteById(pid) {
+    const product = await productsModel.deleteOne({ _id: pid });
+    return product
   }
 }

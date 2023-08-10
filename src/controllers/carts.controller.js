@@ -1,12 +1,9 @@
-import {
-  saveCart as saveCartservice,
-  getCarts as getCartsService
-} from '../services/carts.service.js'
+import * as cartsService from '../services/carts.service.js'
 
 const saveCart = async (req, res) => {
   try {
     const cart = req.body
-    await saveCartservice(cart)
+    await cartsService.save(cart)
     res.send(cart)
   } catch (error) {
     req.logger.error(`Prueba error ${error}`);

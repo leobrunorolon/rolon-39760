@@ -1,13 +1,27 @@
 import cartsModel from './models/carts.model.js'
 
 export default class CartsDao {
-  constructor() { }
+  constructor() {
+    console.log('Working carts with DB')
+  }
 
   async getAll() {
-    return await cartsModel.find();
+    const carts = await cartsModel.find().lean();
+    return carts
   }
 
   async save(cart) {
-    return await cartsModel.create(cart);
+    const result = await cartsModel.create(cart);
+    return result
+  }
+
+  async updateById(id, cart) {
+    const result = await cartsModel.updateOne({ _id: id }, cart);
+    return result;
+  }
+
+  async getById(id) {
+    const cart = await cartsModel.findOne({ _id: id }).lean();
+    return cart;
   }
 }
